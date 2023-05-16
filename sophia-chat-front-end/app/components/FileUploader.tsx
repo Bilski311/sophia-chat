@@ -5,10 +5,8 @@ import uploadService from '../services/uploadService';
 
 const FileUploader = () => {
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
-     onDrop: async (acceptedFiles) => {
-        const uploadPromises = acceptedFiles.map(file => uploadService.uploadFile(file));
-        const data = await Promise.all(uploadPromises);
-        console.log(data);
+     onDrop: (acceptedFiles) => {
+        acceptedFiles.forEach(file => uploadService.uploadFile(file));
      }
     });
   

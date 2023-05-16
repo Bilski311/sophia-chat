@@ -1,18 +1,15 @@
-const uploadFile = async (file: File) => {
+const uploadFile = (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
-
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/upload`, {
+    let response;
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/upload`, {
         method: 'POST',
         body: formData,
-    });
-    console.log(response);
-    if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-    }
+    })
+    .then((res) => response = res)
+    .catch((err) => console.log(err.message));
 
-    const data = await response.json();
-    return data;
+    return response;
 }
 
 export default {
