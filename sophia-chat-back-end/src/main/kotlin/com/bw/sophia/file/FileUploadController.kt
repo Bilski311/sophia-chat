@@ -9,6 +9,9 @@ import org.springframework.web.multipart.MultipartFile
 class FileUploadController {
     @PostMapping("/upload")
     fun handleFileUpload(@RequestParam("file") file: MultipartFile): ResponseEntity<String> {
+        println(file.name)
+        println(file.originalFilename)
+
         return ResponseEntity.ok("File uploaded successfully, filename: ${file.originalFilename}")
     }
 }

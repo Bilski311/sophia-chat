@@ -1,9 +1,16 @@
 'use client';
 import React from 'react';
 import {useDropzone} from 'react-dropzone';
+import uploadService from '../services/uploadService';
 
 const FileUploader = () => {
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone();
+  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+     onDrop: async (acceptedFiles) => {
+        const uploadPromises = acceptedFiles.map(file => uploadService.uploadFile(file));
+        const data = await Promise.all(uploadPromises);
+        console.log(data);
+     }
+    });
   
   const files = acceptedFiles.map((file: File) => (
     <li key={file.name}>
