@@ -3,8 +3,10 @@ from qdrant_client import QdrantClient
 from llama_index.vector_stores import QdrantVectorStore
 from llama_index import GPTVectorStoreIndex, StorageContext, Document
 
+from config import VECTOR_DB_URL
+
 app = Flask(__name__)
-client = QdrantClient("http://localhost:6333")
+client = QdrantClient(VECTOR_DB_URL)
 
 @app.route('/file', methods=['POST'])
 def upload_file():
@@ -17,7 +19,7 @@ def upload_file():
         vector_store = vector_store
     )
     text = file.read().decode()
-    index = GPTVectorStoreIndex.from_documents([Document(text)], storage_context=storage_context)
+    GPTVectorStoreIndex.from_documents([Document(text)], storage_context=storage_context)
 
     return 'File uploaded successfully'
 
